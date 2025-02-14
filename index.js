@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Specific frontend origin
+    origin: "https://accredian-frontend-task-beta-opal.vercel.app/", // Specific frontend origin
     credentials: true, // Allow cookies & authentication
     methods: ["GET", "POST", "PUT", "DELETE"], // Explicitly include PATCH
     allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow headers
