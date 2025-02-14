@@ -49,6 +49,14 @@ app.post("/api/refer", validations, async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  return res.json({
+    success: true,
+    message: "Your server is up and running",
+  });
+});
+
+
 // Start server
 app.listen(5000, () => {
   console.log("Server running on port 5000");
