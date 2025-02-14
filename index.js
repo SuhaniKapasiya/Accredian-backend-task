@@ -9,6 +9,16 @@ const app = express();
 const prisma = new PrismaClient();
 
 app.use(cors());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Specific frontend origin
+    credentials: true, // Allow cookies & authentication
+    methods: ["GET", "POST", "PUT", "DELETE"], // Explicitly include PATCH
+    allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow headers
+    optionsSuccessStatus: 200, // Avoid CORS preflight issues
+  })
+);
 app.use(express.json());
 
 // API to handle referrals
@@ -25,12 +35,17 @@ app.post("/api/refer", validations, async (req, res) => {
     // Send Email Notification
     await sendReferralEmail(referrerName, refereeName, refereeEmail);
 
-    res
-      .status(201)
-      .json({ message: "Referral submitted successfully", newReferral });
+    res.status(201).json({
+      success: true,
+      message: "Referral submitted successfully",
+      newReferral,
+    });
   } catch (error) {
     console.error("Error in /api/refer:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+     res.status(500).json({
+       success: false,
+       error: error.message,
+     });
   }
 });
 
